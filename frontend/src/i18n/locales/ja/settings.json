@@ -160,6 +160,24 @@
         "push": {
           "label": "プッシュ通知",
           "helper": "タスク試行の実行が完了したときにシステム通知を表示します。"
+        },
+        "email": {
+          "label": "メール通知",
+          "helper": "タスク試行の実行が完了したときにメールを送信します。",
+          "toLabel": "宛先",
+          "toPlaceholder": "you@example.com",
+          "smtpHostLabel": "SMTPホスト",
+          "smtpHostPlaceholder": "smtp.example.com",
+          "smtpPortLabel": "SMTPポート",
+          "smtpUsernameLabel": "SMTPユーザー名",
+          "smtpUsernamePlaceholder": "you@example.com",
+          "smtpPasswordLabel": "SMTPパスワード",
+          "smtpPasswordPlaceholder": "アプリパスワード / パスワード",
+          "fromLabel": "送信元",
+          "fromPlaceholder": "you@example.com（任意）",
+          "fromHelper": "空の場合はSMTPユーザー名を使用します。",
+          "starttlsLabel": "STARTTLSを使用",
+          "starttlsHelper": "多くのSMTPサーバーで推奨（ポート587）。"
         }
       },
       "privacy": {

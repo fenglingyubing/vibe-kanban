@@ -160,6 +160,24 @@
         "push": {
           "label": "Notificaciones Push",
           "helper": "Muestra notificaciones del sistema cuando las tareas terminan de ejecutarse."
+        },
+        "email": {
+          "label": "Notificaciones por Correo",
+          "helper": "Envía un correo cuando las tareas terminan de ejecutarse.",
+          "toLabel": "Para",
+          "toPlaceholder": "tu@ejemplo.com",
+          "smtpHostLabel": "Host SMTP",
+          "smtpHostPlaceholder": "smtp.ejemplo.com",
+          "smtpPortLabel": "Puerto SMTP",
+          "smtpUsernameLabel": "Usuario SMTP",
+          "smtpUsernamePlaceholder": "tu@ejemplo.com",
+          "smtpPasswordLabel": "Contraseña SMTP",
+          "smtpPasswordPlaceholder": "Contraseña de aplicación / contraseña",
+          "fromLabel": "De",
+          "fromPlaceholder": "tu@ejemplo.com (opcional)",
+          "fromHelper": "Si está vacío, se usa el usuario SMTP.",
+          "starttlsLabel": "Usar STARTTLS",
+          "starttlsHelper": "Recomendado para la mayoría de servidores SMTP (puerto 587)."
         }
       },
       "privacy": {

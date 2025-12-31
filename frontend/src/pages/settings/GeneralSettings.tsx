@@ -631,6 +631,199 @@ export function GeneralSettings() {
               </p>
             </div>
           </div>
+
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="email-notifications"
+              checked={draft?.notifications.email_enabled}
+              onCheckedChange={(checked: boolean) =>
+                updateDraft({
+                  notifications: {
+                    ...draft!.notifications,
+                    email_enabled: checked,
+                  },
+                })
+              }
+            />
+            <div className="space-y-0.5">
+              <Label htmlFor="email-notifications" className="cursor-pointer">
+                {t('settings.general.notifications.email.label')}
+              </Label>
+              <p className="text-sm text-muted-foreground">
+                {t('settings.general.notifications.email.helper')}
+              </p>
+            </div>
+          </div>
+
+          {draft?.notifications.email_enabled && (
+            <div className="ml-6 space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email-to">
+                  {t('settings.general.notifications.email.toLabel')}
+                </Label>
+                <Input
+                  id="email-to"
+                  value={draft.notifications.email_to ?? ''}
+                  placeholder={t(
+                    'settings.general.notifications.email.toPlaceholder'
+                  )}
+                  onChange={(e) =>
+                    updateDraft({
+                      notifications: {
+                        ...draft.notifications,
+                        email_to: e.target.value.trim() ? e.target.value : null,
+                      },
+                    })
+                  }
+                />
+              </div>
+
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="smtp-host">
+                    {t('settings.general.notifications.email.smtpHostLabel')}
+                  </Label>
+                  <Input
+                    id="smtp-host"
+                    value={draft.notifications.email_smtp_host ?? ''}
+                    placeholder={t(
+                      'settings.general.notifications.email.smtpHostPlaceholder'
+                    )}
+                    onChange={(e) =>
+                      updateDraft({
+                        notifications: {
+                          ...draft.notifications,
+                          email_smtp_host: e.target.value.trim()
+                            ? e.target.value
+                            : null,
+                        },
+                      })
+                    }
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="smtp-port">
+                    {t('settings.general.notifications.email.smtpPortLabel')}
+                  </Label>
+                  <Input
+                    id="smtp-port"
+                    type="number"
+                    min={1}
+                    max={65535}
+                    value={draft.notifications.email_smtp_port}
+                    onChange={(e) => {
+                      const nextPort = Number(e.target.value);
+                      if (!Number.isFinite(nextPort)) return;
+                      updateDraft({
+                        notifications: {
+                          ...draft.notifications,
+                          email_smtp_port: Math.min(
+                            65535,
+                            Math.max(1, Math.trunc(nextPort))
+                          ),
+                        },
+                      });
+                    }}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="smtp-username">
+                    {t('settings.general.notifications.email.smtpUsernameLabel')}
+                  </Label>
+                  <Input
+                    id="smtp-username"
+                    value={draft.notifications.email_smtp_username ?? ''}
+                    placeholder={t(
+                      'settings.general.notifications.email.smtpUsernamePlaceholder'
+                    )}
+                    onChange={(e) =>
+                      updateDraft({
+                        notifications: {
+                          ...draft.notifications,
+                          email_smtp_username: e.target.value.trim()
+                            ? e.target.value
+                            : null,
+                        },
+                      })
+                    }
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="smtp-password">
+                    {t('settings.general.notifications.email.smtpPasswordLabel')}
+                  </Label>
+                  <Input
+                    id="smtp-password"
+                    type="password"
+                    value={draft.notifications.email_smtp_password ?? ''}
+                    placeholder={t(
+                      'settings.general.notifications.email.smtpPasswordPlaceholder'
+                    )}
+                    onChange={(e) =>
+                      updateDraft({
+                        notifications: {
+                          ...draft.notifications,
+                          email_smtp_password: e.target.value
+                            ? e.target.value
+                            : null,
+                        },
+                      })
+                    }
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="smtp-from">
+                  {t('settings.general.notifications.email.fromLabel')}
+                </Label>
+                <Input
+                  id="smtp-from"
+                  value={draft.notifications.email_from ?? ''}
+                  placeholder={t(
+                    'settings.general.notifications.email.fromPlaceholder'
+                  )}
+                  onChange={(e) =>
+                    updateDraft({
+                      notifications: {
+                        ...draft.notifications,
+                        email_from: e.target.value.trim() ? e.target.value : null,
+                      },
+                    })
+                  }
+                />
+                <p className="text-sm text-muted-foreground">
+                  {t('settings.general.notifications.email.fromHelper')}
+                </p>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="smtp-starttls"
+                  checked={draft.notifications.email_smtp_use_starttls}
+                  onCheckedChange={(checked: boolean) =>
+                    updateDraft({
+                      notifications: {
+                        ...draft.notifications,
+                        email_smtp_use_starttls: checked,
+                      },
+                    })
+                  }
+                />
+                <div className="space-y-0.5">
+                  <Label htmlFor="smtp-starttls" className="cursor-pointer">
+                    {t('settings.general.notifications.email.starttlsLabel')}
+                  </Label>
+                  <p className="text-sm text-muted-foreground">
+                    {t('settings.general.notifications.email.starttlsHelper')}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
 

@@ -156,6 +156,38 @@ pub struct NotificationConfig {
     pub sound_enabled: bool,
     pub push_enabled: bool,
     pub sound_file: SoundFile,
+    /// Send an email when task attempts finish running.
+    #[serde(default)]
+    pub email_enabled: bool,
+    /// Recipient email address for task completion notifications.
+    #[serde(default)]
+    pub email_to: Option<String>,
+    /// SMTP server host (e.g. smtp.gmail.com).
+    #[serde(default)]
+    pub email_smtp_host: Option<String>,
+    /// SMTP server port (defaults to 587 when using STARTTLS).
+    #[serde(default = "default_email_smtp_port")]
+    pub email_smtp_port: u16,
+    /// SMTP username (often the full email address).
+    #[serde(default)]
+    pub email_smtp_username: Option<String>,
+    /// SMTP password or app password.
+    #[serde(default)]
+    pub email_smtp_password: Option<String>,
+    /// From address (defaults to `email_smtp_username` when omitted).
+    #[serde(default)]
+    pub email_from: Option<String>,
+    /// Use STARTTLS when connecting to the SMTP server.
+    #[serde(default = "default_email_smtp_use_starttls")]
+    pub email_smtp_use_starttls: bool,
+}
+
+fn default_email_smtp_port() -> u16 {
+    587
+}
+
+fn default_email_smtp_use_starttls() -> bool {
+    true
 }
 
 impl From<v1::Config> for NotificationConfig {
@@ -164,6 +196,14 @@ impl From<v1::Config> for NotificationConfig {
             sound_enabled: old.sound_alerts,
             push_enabled: old.push_notifications,
             sound_file: SoundFile::from(old.sound_file), // Now SCREAMING_SNAKE_CASE
+            email_enabled: false,
+            email_to: None,
+            email_smtp_host: None,
+            email_smtp_port: default_email_smtp_port(),
+            email_smtp_username: None,
+            email_smtp_password: None,
+            email_from: None,
+            email_smtp_use_starttls: default_email_smtp_use_starttls(),
         }
     }
 }
@@ -174,6 +214,14 @@ impl Default for NotificationConfig {
             sound_enabled: true,
             push_enabled: true,
             sound_file: SoundFile::CowMooing,
+            email_enabled: false,
+            email_to: None,
+            email_smtp_host: None,
+            email_smtp_port: default_email_smtp_port(),
+            email_smtp_username: None,
+            email_smtp_password: None,
+            email_from: None,
+            email_smtp_use_starttls: default_email_smtp_use_starttls(),
         }
     }
 }

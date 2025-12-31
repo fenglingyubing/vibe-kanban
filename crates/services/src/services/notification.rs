@@ -1,5 +1,10 @@
 use std::sync::{Arc, OnceLock};
 
+use anyhow::Context as _;
+use lettre::{
+    AsyncSmtpTransport, AsyncTransport as _, Message, Tokio1Executor, message::SinglePart,
+    transport::smtp::authentication::Credentials,
+};
 use tokio::sync::RwLock;
 use utils;
 
@@ -34,6 +39,64 @@ impl NotificationService {
         if config.push_enabled {
             Self::send_push_notification(title, message).await;
         }
+
+        if config.email_enabled {
+            let config = config.clone();
+            let title = title.to_string();
+            let message = message.to_string();
+            tokio::spawn(async move {
+                if let Err(err) = Self::send_email_notification(&config, &title, &message).await {
+                    tracing::warn!(error = %err, "Failed to send email notification");
+                }
+            });
+        }
+    }
+
+    async fn send_email_notification(
+        config: &NotificationConfig,
+        title: &str,
+        message: &str,
+    ) -> anyhow::Result<()> {
+        let to = config
+            .email_to
+            .as_deref()
+            .context("notifications.email_to not set")?;
+        let smtp_host = config
+            .email_smtp_host
+            .as_deref()
+            .context("notifications.email_smtp_host not set")?;
+
+        let from = config
+            .email_from
+            .as_deref()
+            .or(config.email_smtp_username.as_deref())
+            .unwrap_or(to);
+
+        let email = Message::builder()
+            .from(from.parse()?)
+            .to(to.parse()?)
+            .subject(title)
+            .singlepart(SinglePart::plain(message.to_string()))?;
+
+        let port = config.email_smtp_port;
+        let mut transport_builder = if config.email_smtp_use_starttls {
+            AsyncSmtpTransport::<Tokio1Executor>::starttls_relay(smtp_host)?
+        } else {
+            AsyncSmtpTransport::<Tokio1Executor>::builder_dangerous(smtp_host)
+        }
+        .port(port);
+
+        if let (Some(username), Some(password)) = (
+            config.email_smtp_username.as_deref(),
+            config.email_smtp_password.as_deref(),
+        ) {
+            transport_builder = transport_builder
+                .credentials(Credentials::new(username.to_string(), password.to_string()));
+        }
+
+        let transport = transport_builder.build();
+        transport.send(email).await?;
+        Ok(())
     }
 
     /// Play a system sound notification across platforms

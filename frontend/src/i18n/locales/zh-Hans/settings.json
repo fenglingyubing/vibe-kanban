@@ -160,6 +160,24 @@
         "push": {
           "label": "推送通知",
           "helper": "任务尝试完成运行时显示系统通知。"
+        },
+        "email": {
+          "label": "邮件通知",
+          "helper": "任务尝试完成运行时发送邮件。",
+          "toLabel": "收件人",
+          "toPlaceholder": "you@example.com",
+          "smtpHostLabel": "SMTP 主机",
+          "smtpHostPlaceholder": "smtp.example.com",
+          "smtpPortLabel": "SMTP 端口",
+          "smtpUsernameLabel": "SMTP 用户名",
+          "smtpUsernamePlaceholder": "you@example.com",
+          "smtpPasswordLabel": "SMTP 密码",
+          "smtpPasswordPlaceholder": "应用专用密码 / 密码",
+          "fromLabel": "发件人",
+          "fromPlaceholder": "you@example.com（可选）",
+          "fromHelper": "留空时默认使用 SMTP 用户名。",
+          "starttlsLabel": "使用 STARTTLS",
+          "starttlsHelper": "多数 SMTP 服务器推荐使用（端口 587）。"
         }
       },
       "privacy": {

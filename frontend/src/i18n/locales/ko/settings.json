@@ -160,6 +160,24 @@
         "push": {
           "label": "푸시 알림",
           "helper": "작업 시도가 완료되면 시스템 알림을 표시합니다."
+        },
+        "email": {
+          "label": "이메일 알림",
+          "helper": "작업 시도가 완료되면 이메일을 보냅니다.",
+          "toLabel": "받는 사람",
+          "toPlaceholder": "you@example.com",
+          "smtpHostLabel": "SMTP 호스트",
+          "smtpHostPlaceholder": "smtp.example.com",
+          "smtpPortLabel": "SMTP 포트",
+          "smtpUsernameLabel": "SMTP 사용자 이름",
+          "smtpUsernamePlaceholder": "you@example.com",
+          "smtpPasswordLabel": "SMTP 비밀번호",
+          "smtpPasswordPlaceholder": "앱 비밀번호 / 비밀번호",
+          "fromLabel": "보내는 사람",
+          "fromPlaceholder": "you@example.com (선택)",
+          "fromHelper": "비워두면 SMTP 사용자 이름을 사용합니다.",
+          "starttlsLabel": "STARTTLS 사용",
+          "starttlsHelper": "대부분의 SMTP 서버에서 권장(포트 587)."
         }
       },
       "privacy": {

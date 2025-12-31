@@ -160,6 +160,24 @@
         "push": {
           "label": "Push Notifications",
           "helper": "Show system notifications when task attempts finish running."
+        },
+        "email": {
+          "label": "Email Notifications",
+          "helper": "Send an email when task attempts finish running.",
+          "toLabel": "To",
+          "toPlaceholder": "you@example.com",
+          "smtpHostLabel": "SMTP Host",
+          "smtpHostPlaceholder": "smtp.example.com",
+          "smtpPortLabel": "SMTP Port",
+          "smtpUsernameLabel": "SMTP Username",
+          "smtpUsernamePlaceholder": "you@example.com",
+          "smtpPasswordLabel": "SMTP Password",
+          "smtpPasswordPlaceholder": "App password / password",
+          "fromLabel": "From",
+          "fromPlaceholder": "you@example.com (optional)",
+          "fromHelper": "If empty, defaults to the SMTP username.",
+          "starttlsLabel": "Use STARTTLS",
+          "starttlsHelper": "Recommended for most SMTP servers (port 587)."
         }
       },
       "privacy": {
